@@ -1,0 +1,75 @@
+body{
+    style:none;
+    font-family: cambria;
+}
+#login{
+    style:none;
+    position: absolute;
+    margin:0;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    padding: 3vw 3vw 3vw 3vw;
+    background: rgba(0,0,0,0.3);
+    
+}
+
+label{
+    margin-right: 1vw;
+}
+
+input{
+    width: 15vw;
+    position: relative;
+    margin-top: 1vw;
+    
+}
+
+#submitButton{
+    width: 70px;
+    position: relative;
+    top: 0.5vw;
+    border:none;
+}
+
+#submitButton:hover{
+    style:none;
+    background-color:rgba(0,0,0,0.3);
+}
+
+#registerButton{
+    width: 70px;
+    position: relative;
+    top: 0.5vw;
+    float: right;
+    border:none;
+}
+
+#registerButton:hover{
+    style:none;
+    background-color:rgba(0,0,0,0.3);
+}
+
+#failedMessage{
+    position: absolute;
+    top: 15vw;
+    border:none;
+    
+    
+    top:60%;
+    left:50%;
+    transform: translate(-50%, -50%);
+   
+    
+    
+    white-space: nowrap;
+    font-family: cambria;
+    font-size: 15px;
+    
+  
+    border-bottom: 1px solid black;
+    padding-top: 6vw;
+    padding-bottom: 0.2vw;
+    
+}
