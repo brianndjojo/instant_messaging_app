@@ -1,18 +1,31 @@
 <?php
+    //for testing input given by user. Retrieved from: https://www.w3schools.com/php/php_form_validation.asp
+    function test_input($data) 
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     //get values from user
     $reg_username = $_POST['username'];
     $reg_password = $_POST['password'];
     $reg_confirmpass = $_POST['confirmPassword'];
     $reg_email = $_POST['email'];
 
+    //test result of email format
+    $emailValid = test_input($reg_email);
+
     //boolean variables used to check if the inputted data by user is valid.
     $nameCheck = true;
     $passwordCheck = true;
     $emailCheck = true;
 
+    //Error messages
     $err_nameMsg = "Username already exists!";
     $err_passMsg = "Password is not rewritten the same!";
-    $err_emailMsg = "Email already used!";
+    $err_emailMsg = "Either email already used or email format is wrong!";
 
     //localhost connect (not web based yet!)
     mysql_connect("localhost", "root", "");
@@ -24,20 +37,26 @@
     $num_existUser = mysql_num_rows($existUsername);
 
     //variable used to check if email already exists
-    $existUsername = mysql_query(" SELECT * FROM users  WHERE email = '$reg_email' ")
+    $existEmail = mysql_query(" SELECT * FROM users  WHERE email = '$reg_email' ")
         or die("Failed to query the database. ".mysql_error());
-    $num_existEmail = mysql_num_rows($existUsername);
+    $num_existEmail = mysql_num_rows($existEmail);
 
-    //checks user data inputted by user.
+
+    
+     //checks user data inputted by user.
+
+     //Checks if password is rewritten the same by the user. Prevents typos.
     if($reg_password != $reg_confirmpass)
     {
         $passwordCheck = false;
     }
+    //Checks if username already exists.
     if($num_existUser >= 1)
     {
         $nameCheck = false;
     }
-    if($num_existEmail >= 1)
+    //Checks if email already exists & Checks if email format is valid!
+    if($num_existEmail >= 1 || !filter_var($emailValid, FILTER_VALIDATE_EMAIL))
     {
         $emailCheck = false;
     }
@@ -48,8 +67,8 @@
         //Query the information from the database for the user.
         $info_result = mysql_query(" INSERT INTO users (username, password, email) VALUES ('$reg_username', '$reg_password', '$reg_email') " )
             or die("Failed to query the database. ".mysql_error());
-        
-        header("location:localhost/login/login.php");
+       
+        header("location: http://localhost/login/login.php");
     }
     //outputs corresponding error message to user if he/she has typed something wrong.
     else
