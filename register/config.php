@@ -8,9 +8,11 @@
     //boolean variables used to check if the inputted data by user is valid.
     $nameCheck = true;
     $passwordCheck = true;
+    $emailCheck = true;
 
     $err_nameMsg = "Username already exists!";
     $err_passMsg = "Password is not rewritten the same!";
+    $err_emailMsg = "Email already used!";
 
     //localhost connect (not web based yet!)
     mysql_connect("localhost", "root", "");
@@ -20,6 +22,12 @@
     $existUsername = mysql_query(" SELECT * FROM users  WHERE username = '$reg_username' ")
         or die("Failed to query the database. ".mysql_error());
     $num_existUser = mysql_num_rows($existUsername);
+
+    //variable used to check if email already exists
+    $existUsername = mysql_query(" SELECT * FROM users  WHERE email = '$reg_email' ")
+        or die("Failed to query the database. ".mysql_error());
+    $num_existEmail = mysql_num_rows($existUsername);
+
     //checks user data inputted by user.
     if($reg_password != $reg_confirmpass)
     {
@@ -29,9 +37,13 @@
     {
         $nameCheck = false;
     }
+    if($num_existEmail >= 1)
+    {
+        $emailCheck = false;
+    }
 
     //only create record of new user if confirm password works & when his/her username does not already exist!
-    if($passwordCheck == true && $nameCheck == true)
+    if($passwordCheck == true && $nameCheck == true && $emailCheck == true)
     {
         //Query the information from the database for the user.
         $info_result = mysql_query(" INSERT INTO users (username, password, email) VALUES ('$reg_username', '$reg_password', '$reg_email') " )
@@ -39,11 +51,24 @@
         
         header("location:localhost/login/login.php");
     }
+    //outputs corresponding error message to user if he/she has typed something wrong.
     else
     {
-        if($nameCheck == false && $passwordCheck == false)
+        if($nameCheck == false && $passwordCheck == false && $emailCheck == false)
+        {
+            echo $err_nameMsg . "\n" . $err_passMsg . "\n" . $err_emailMsg;
+        }
+        else if($nameCheck == false && $emailCheck == false)
         {
             echo $err_nameMsg . "\n" . $err_passMsg;
+        }
+        else if($nameCheck == false && $passwordCheck == false)
+        {
+            echo $err_nameMsg . "\n" .$err_passMsg;
+        }
+        else if($passwordCheck == false && $emailCheck == false)
+        {
+            echo $err_passMsg . "\n" .$err_emailMsg;
         }
         else if($nameCheck == false)
         {
@@ -52,6 +77,10 @@
         else if($passwordCheck == false)
         {
             echo $err_passMsg;
+        }
+        else if($emailCheck == false)
+        {
+            echo $err_emailMsg;
         }
     }
 ?>
