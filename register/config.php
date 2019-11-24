@@ -1,4 +1,11 @@
 <?php
+    define('ROOT', 'C:\Xampp3\htdocs');
+    //for encryption.
+    require_once(ROOT . '/encryption/defuse-crypto-php5.phar');
+    
+    use Defuse\Crypto\Crypto;
+    use Defuse\Crypto\Key;
+   
     //for testing input given by user. Retrieved from: https://www.w3schools.com/php/php_form_validation.asp
     function test_input($data) 
     {
@@ -7,7 +14,7 @@
         $data = htmlspecialchars($data);
         return $data;
     }
-
+    
     //get values from user
     $reg_username = $_POST['username'];
     $reg_password = $_POST['password'];
@@ -25,11 +32,13 @@
     //Error messages
     $err_nameMsg = "Username already exists!";
     $err_passMsg = "Password is not rewritten the same!";
-    $err_emailMsg = "Either email already used or email format is wrong!";
+    $err_emailMsg = "Either email is already used OR email format is wrong!";
 
     //localhost connect (not web based yet!)
     mysql_connect("localhost", "root", "");
     mysql_select_db("comp3334");
+
+   
 
     //variable used to check if username already exists
     $existUsername = mysql_query(" SELECT * FROM users  WHERE username = '$reg_username' ")
@@ -64,8 +73,14 @@
     //only create record of new user if confirm password works & when his/her username does not already exist!
     if($passwordCheck == true && $nameCheck == true && $emailCheck == true)
     {
+        //Encrypt password
+        $newKey = Key::createNewRandomKey();
+        $encodedPassword = Crypto::encrypt($reg_password, $newKey, $raw_binary = false);
+        
+        $encodedKey = $newKey -> saveToAsciiSafeString();
+
         //Query the information from the database for the user.
-        $info_result = mysql_query(" INSERT INTO users (username, password, email) VALUES ('$reg_username', '$reg_password', '$reg_email') " )
+        $info_result = mysql_query(" INSERT INTO users (username, password, email, userKey) VALUES ('$reg_username', '$encodedPassword', '$reg_email', '$encodedKey') " )
             or die("Failed to query the database. ".mysql_error());
        
         header("location: http://localhost/login/login.php");
@@ -104,7 +119,7 @@
     }
 ?>
 
-
+<!--Front-End copied here, so we can output the error message above directly to the registration page!-->
 <<!DOCTYPE html>
 <html>
 
