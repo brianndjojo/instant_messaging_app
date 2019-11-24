@@ -1,6 +1,9 @@
 <?php
-    //get login page
-    $home = file_get_contents("login.php");
+    define('ROOT', 'C:\Xampp3\htdocs');
+    //for encryption.
+    require_once(ROOT . '/encryption/defuse-crypto-php5.phar');
+    use Defuse\Crypto\Crypto;
+    use Defuse\Crypto\Key;
 
     //get values from user
     $userName = $_POST['username'];
@@ -18,11 +21,14 @@
     mysql_select_db("comp3334");
 
     //Query the information from the database for the user.
-    $info_result = mysql_query(" SELECT * FROM `users` WHERE username = '$userName' AND password = '$passWord' " )
+    $info_result = mysql_query(" SELECT * FROM `users` WHERE username = '$userName' " )
                         or die("Failed to query the database. ".mysql_error());
     $row = mysql_fetch_array($info_result);
 
-    if($row['username'] == $userName && $row['password'] == $passWord && $row['username'] != "" && $row['password'] != "")
+    $fetchedKey = Key::loadFromAsciiSafeString($row['userKey']);
+    $storedPass = Crypto::decrypt($row['password'], $fetchedKey, $raw_binary = false);
+    
+    if($row['username'] == $userName && $passWord == $storedPass && $row['username'] != "" && $row['password'] != "")
     {
         echo "Welcome ".$row['username'];
     }
@@ -30,6 +36,7 @@
     {
         header("Location:loginFailed.php");
         exit();
+        
     }
 ?>
 
