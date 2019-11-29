@@ -30,10 +30,10 @@
                         <input class = "form-control" type = "text" name = "username" required>
 
                         <label><b>Password</b></label>
-                        <input class = "form-control" type = "text" name = "password" required>
+                        <input class = "form-control" type = "password" name = "password" required>
                         
                         <label><b>Confirm Password</b></label>
-                        <input class = "form-control" type = "text=" name = "confirmPassword" required>
+                        <input class = "form-control" type = "password" name = "confirmPassword" required>
 
                         <label><b>Email</b></label>
                         <input class = "form-control" type = "text" name = "email" required>

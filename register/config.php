@@ -30,9 +30,9 @@
     $emailCheck = true;
 
     //Error messages
-    $err_nameMsg = "Username already exists!";
-    $err_passMsg = "Password is not rewritten the same!";
-    $err_emailMsg = "Either email is already used OR email format is wrong!";
+    $err_nameMsg = '<div class="errorMsg"> Username already exists! </div>';
+    $err_passMsg = '<div class="errorMsg"> Password is not rewritten the same! </div>';
+    $err_emailMsg = '<div class="errorMsg"> Either email is already used OR email format is wrong! </div>';
 
     //localhost connect (not web based yet!)
     mysql_connect("localhost", "root", "");
@@ -152,17 +152,17 @@
                         <input class = "form-control" type = "text" name = "username" required>
 
                         <label><b>Password</b></label>
-                        <input class = "form-control" type = "text" name = "password" required>
+                        <input class = "form-control" type = "password" name = "password" required>
                         
                         <label><b>Confirm Password</b></label>
-                        <input class = "form-control" type = "text=" name = "confirmPassword" required>
+                        <input class = "form-control" type = "password" name = "confirmPassword" required>
 
                         <label><b>Email</b></label>
                         <input class = "form-control" type = "text" name = "email" required>
 
                         <hr class = "mb-3">
 
-                        <input class="btn btn-outline-dark" type = "submit" id = "createButton" value = "Sign Up">
+                        <input class="btn btn-outline-light" type = "submit" id = "createButton" value = "Sign Up">
                     </div>
                 </div>
             </div>
