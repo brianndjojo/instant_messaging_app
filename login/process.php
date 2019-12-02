@@ -16,23 +16,26 @@
     $userName = mysql_real_escape_string($userName);
     $passWord = mysql_real_escape_string($passWord);
 
-    //localhost connect (not web based yet!)
+    //Connect to server to get data from databases.
     mysql_connect("localhost", "root", "");
     mysql_select_db("comp3334");
+    
+    mysql_connect("localhost", "root", "");
+    mysql_select_db("comp3334_userkeys");
 
     //Query the information from the database for the user.
-    $info_result = mysql_query(" SELECT * FROM `users` WHERE username = '$userName' " )
+    $info_result = mysql_query(" SELECT * FROM comp3334.users join comp3334_userkeys.userkeys WHERE comp3334.users.username = '$userName' AND comp3334_userkeys.userkeys.username = '$userName' " )
                         or die("Failed to query the database. ".mysql_error());
     $row = mysql_fetch_array($info_result);
     if($row['username'] == $userName)
     {
-        $fetchedKey = Key::loadFromAsciiSafeString($row['userKey']);
+        $fetchedKey = Key::loadFromAsciiSafeString($row['userkey']);
         $storedPass = Crypto::decrypt($row['password'], $fetchedKey, $raw_binary = false);
         
         if($passWord == $storedPass && $row['username'] != "" && $row['password'] != "")
         {
         
-        echo "Login Success!";
+        echo '<div class="errorMsg"> Login Success! </div>';
         
         }
     }
