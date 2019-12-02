@@ -1,6 +1,11 @@
 # instant_messaging_app
 Encryption folder is a user-made library used for AES encryption.
 
+Project uses:
+-PHP5.6
+-XAMPP VER 3.2.2
+-XAMP0 installer = xampp-win32-5.6.38-0-VC11-installer
+
 User-made library name: Defuse
 
 Credits: 
