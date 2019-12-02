@@ -34,10 +34,9 @@
     $err_passMsg = '<div class="errorMsg"> Password is not rewritten the same! </div>';
     $err_emailMsg = '<div class="errorMsg"> Either email is already used OR email format is wrong! </div>';
 
-    //localhost connect (not web based yet!)
+    //Connect to server & Select comp3334 database as it contains user data.
     mysql_connect("localhost", "root", "");
     mysql_select_db("comp3334");
-
    
 
     //variable used to check if username already exists
@@ -73,6 +72,10 @@
     //only create record of new user if confirm password works & when his/her username does not already exist!
     if($passwordCheck == true && $nameCheck == true && $emailCheck == true)
     {
+        //Connects to comp3334_userkeys database which specifically holds the key for each user.
+        mysql_connect("localhost", "root", "");
+        mysql_select_db("comp3334_userkeys");
+        
         //Encrypt password
         $newKey = Key::createNewRandomKey();
         $encodedPassword = Crypto::encrypt($reg_password, $newKey, $raw_binary = false);
@@ -80,7 +83,10 @@
         $encodedKey = $newKey -> saveToAsciiSafeString();
 
         //Query the information from the database for the user.
-        $info_result = mysql_query(" INSERT INTO users (username, password, email, userKey) VALUES ('$reg_username', '$encodedPassword', '$reg_email', '$encodedKey') " )
+        $info_result = mysql_query(" INSERT INTO comp3334.users (username, password, email) VALUES ('$reg_username', '$encodedPassword', '$reg_email') " )
+            or die("Failed to query the database. ".mysql_error());
+        
+        $key_result = mysql_query(" INSERT INTO comp3334_userkeys.userkeys (username, userKey) VALUES ('$reg_username', '$encodedKey') ")
             or die("Failed to query the database. ".mysql_error());
        
         header("location: http://localhost/login/login.php");
