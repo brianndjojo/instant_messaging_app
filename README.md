@@ -9,3 +9,10 @@ Credits:
 
 The folder, "database_source" is to give you an example of what the database looks like.
 - No data of actual users will be present in this folder. Data that is present are used as dummy variables to give you an example of what the overall database structure looks like.
+
+The folder, "chat" contains the chat app itself.
+- Currently it is only a template for the chat.
+- Have not implemented Key Exchange & Data retrieval from database yet.
+- Requires Socket.io & Node.js if you would like to edit the code.
+- Video Reference & Example of installing and implementing Socket.io & Node.js:
+    https://www.youtube.com/watch?v=rxzOqP9YwmM
