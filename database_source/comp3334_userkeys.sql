@@ -19,29 +19,28 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `comp3334`
+-- Database: `comp3334_userkeys`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for table `userkeys`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `password` varchar(8000) NOT NULL,
-  `email` varchar(255) DEFAULT NULL
+CREATE TABLE `userkeys` (
+  `username` varchar(255) NOT NULL,
+  `userkey` varchar(8000) NOT NULL,
+  `passkey` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `userkeys`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
-(0, 'brianndjojo2', 'def502005816ad9fd9764423f8c32fb07379ce7ce2a3f505e6593a63bf7221e447999f7550117a6108b07483162e2eefa3f80aeee2684d7d89ef27f1960a8978d952b7755153698b105bffc29b39c42db6bc85dd0a1145d46fd543', 'brianndjojo2poo@gmail.com'),
-(0, 'brianndjojo3', 'def502002c4fd5fa7b763e50bce6deedc5e680006633c4743efbe5e2ceb06a062feba64638e5a8599357f9d5916997d9fe0ed0f09c9c058f6a3f9694b797636154cbf7d0d213b0a42d04a2e2670a3cccb53d132d8b0a2ba9421b2b', 'brianndjojo3poo@gmail.com');
+INSERT INTO `userkeys` (`username`, `userkey`, `passkey`) VALUES
+('brianndjojo2', 'def00000a212f938ce982de75e2db418508c7012deb0df286b5a72d8137719eb36aff664efe3491691431708c7be46b9f4c92b2983a71bc48037e67590aeb1e321e7d6b5', ''),
+('brianndjojo3', 'def0000067dda2ef1d7298a903c1c9659c63c32324eaf831665217797457d748445d7f0bdce0009e9b024072f9bb2c8d300a4787d379349758f5901bf907d511911abe29', '');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
