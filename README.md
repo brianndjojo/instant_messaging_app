@@ -8,4 +8,4 @@ Credits:
 - Authors: Created by Taylor Hornby and Scott Arciszewski.
 
 The folder, "database_source" is to give you an example of what the database looks like.
-- No data of actual users will be present in this folder. Data that is present are used as dummy variables to give you an example of what it looks like.
+- No data of actual users will be present in this folder. Data that is present are used as dummy variables to give you an example of what the overall database structure looks like.
