@@ -3,14 +3,17 @@ const messageContainer = document.getElementById('sender');
 const messageText = document.getElementById('msgInput');
 const sentMessages = document.getElementById('messages');
 
-//This will be replaced. Placeholder for indicating a user has joined.
-const name = prompt('Enter your name?');
-appendMsg('You connected.');
+//Gets your username from your login session.
+const name = getUsername();
+console.log(name);
+
+//Upon connection, you tell teh server that you connected.
+appendConnMsg('You connected.');
 socket.emit('newUser', name); //Used to send the name of the person who just joined to the server, which is then sent to the other user.
 
 //Outputs name of user who just connected.
 socket.on('userConnected', name =>{
-   appendMsg(`${name} connected.`);
+    appendConnMsg(`${name} connected.`);
 });
 
 //for recieving message.
@@ -21,7 +24,7 @@ socket.on('chatMsg', data => {
 
 //Outputs name of user who just disconnected.
 socket.on('userDisconnected', name =>{
-    appendMsg(`${name} disconnected.`);
+    appendDisMsg(`${name} disconnected.`);
 });
 
 //for sending message.
@@ -35,6 +38,25 @@ messageContainer.addEventListener('submit', e => {
     messageText.value = ''; //clears messageText for new messages.
 });
 
+function getUsername(){
+    var request = new XMLHttpRequest();
+    var name;
+    request.onload = function(){
+        alert(this.responseText); //this.responseText in built in AJAX.
+        name = this.responseText;
+    }
+    request.open("get", "getusername.php", false);
+    request.send();
+
+    if(request.readyState == 4 && request.status == 200){
+        return name;
+    }
+
+    
+    
+    
+
+}
 
 //Appends message to chat.
 function appendMsg(message){
@@ -42,3 +64,20 @@ function appendMsg(message){
     msgElement.innerText = message;
     sentMessages.append(msgElement);
 }
+
+//Appends connected message to chat.
+function appendConnMsg(message){
+    const msgElement = document.createElement('div');
+    msgElement.classList.add("connected");
+    msgElement.innerText = message;
+    sentMessages.append(msgElement);
+}
+
+//Appends disconnected message to chat.
+function appendDisMsg(message){
+    const msgElement = document.createElement('div');
+    msgElement.classList.add("disconnected");
+    msgElement.innerText = message;
+    sentMessages.append(msgElement);
+}
+
