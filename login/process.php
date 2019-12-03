@@ -1,4 +1,5 @@
 <?php
+    session_start();
     define('ROOT', 'C:\Xampp3\htdocs');
     //for encryption.
     require_once(ROOT . '/encryption/defuse-crypto-php5.phar');
@@ -34,9 +35,8 @@
         
         if($passWord == $storedPass && $row['username'] != "" && $row['password'] != "")
         {
-        
-        echo '<div class="errorMsg"> Login Success! </div>';
-        
+            $_SESSION["name"] = $row['username'];
+            header('location: http://localhost/chat');
         }
     }
     
