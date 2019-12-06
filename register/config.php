@@ -1,7 +1,7 @@
 <?php
     define('ROOT', 'C:\Xampp3\htdocs');
     //for encryption.
-    require_once(ROOT . '/encryption/defuse-crypto-php5.phar');
+    require_once(ROOT . '\encryption\defuse-crypto-php5.phar');
     
     use Defuse\Crypto\Crypto;
     use Defuse\Crypto\Key;
