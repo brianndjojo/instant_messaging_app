@@ -1,4 +1,5 @@
 # instant_messaging_app
+# test2 BRANCH (For JIMMY)
 Encryption folder is a user-made library used for AES encryption.
 
 Project uses:
