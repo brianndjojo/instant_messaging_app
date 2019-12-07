@@ -7,9 +7,10 @@ const users = {} //To hold usernames of all users currently in the chat.
 io.on('connection', socket =>{
 
     //Broadcasts notification when a new user joins with his/her name outputted on their screen only.
-    socket.on('newUser', name =>{
-        users[socket.id] = name; //Assigns name of user as id to distinguish socket.
-        socket.broadcast.emit('userConnected', name);
+    socket.on('newUser', data =>{
+        users[socket.id] = data.name; //Assigns name of user as id to distinguish socket.
+        userKeys[socket.id] = data.keypair; 
+        socket.broadcast.emit('userConnected', data.name);
     });
 
     //Broadcasts Message to all other users except for you.

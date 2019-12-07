@@ -21,6 +21,7 @@ socket.on('userConnected', name =>{
 
 //for recieving message.
 socket.on('chatMsg', data => {
+    /*Decrypt message here.*/
     console.log(data);
     appendMsg(`${data.name}:    ${data.message}`);
 });
@@ -34,12 +35,18 @@ socket.on('userDisconnected', name =>{
 messageContainer.addEventListener('submit', e => {
     e.preventDefault() //stop our page from refreshing when clicking send.
     const message = messageText.value;
+
+   
     socket.emit('sendchatMsg', message); //sends message from client to server.
     
     appendMsg(`You: ${message}`); //appends message to chat sent by you!
+    /*Encrypt message here.*/
+    //getencryptMsg();
     
     messageText.value = ''; //clears messageText for new messages.
 });
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 //Appends message to chat.
 function appendMsg(message){
@@ -64,6 +71,8 @@ function appendDisMsg(message){
     sentMessages.append(msgElement);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////
+
 function getUsername(){
     var request = new XMLHttpRequest();
     var data;
@@ -79,9 +88,24 @@ function getUsername(){
     }
 }
 
-function encryptMsg(){
-    
-}
+/*function getencryptMsg(){
+    var request2 = new XMLHttpRequest();
+    var data;
+    request2.onload = function(){
+        alert(this.responseText); //this.responseText in built in AJAX.
+        data = JSON.parse(this.responseText);
+    }
+    request2.open("get", "encrypt.php", false);
+    request2.send();
+
+    if(request2.readyState == 4 && request2.status == 200){
+        return data;
+    }
+}*/
+
+
+
+         
 
 
 
