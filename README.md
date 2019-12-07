@@ -7,8 +7,6 @@ Project uses:
 - XAMPP installer = xampp-win32-5.6.38-0-VC11-installer
 
 User-made libraries: 
-- Defuse
-- phpseclib (VER 1.0.18)
 Credits: 
 - Defuse
     - Source: https://github.com/defuse/php-encryption 
