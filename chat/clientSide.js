@@ -3,9 +3,12 @@ const messageContainer = document.getElementById('sender');
 const messageText = document.getElementById('msgInput');
 const sentMessages = document.getElementById('messages');
 
+const userData = getUsername();
 //Gets your username from your login session.
-const name = getUsername();
+const name = userData.username;
+const keyPair = userData.key;
 console.log(name);
+console.log(keyPair);
 
 //Upon connection, you tell teh server that you connected.
 appendConnMsg('You connected.');
@@ -38,26 +41,6 @@ messageContainer.addEventListener('submit', e => {
     messageText.value = ''; //clears messageText for new messages.
 });
 
-function getUsername(){
-    var request = new XMLHttpRequest();
-    var name;
-    request.onload = function(){
-        alert(this.responseText); //this.responseText in built in AJAX.
-        name = this.responseText;
-    }
-    request.open("get", "getusername.php", false);
-    request.send();
-
-    if(request.readyState == 4 && request.status == 200){
-        return name;
-    }
-
-    
-    
-    
-
-}
-
 //Appends message to chat.
 function appendMsg(message){
     const msgElement = document.createElement('div');
@@ -80,4 +63,25 @@ function appendDisMsg(message){
     msgElement.innerText = message;
     sentMessages.append(msgElement);
 }
+
+function getUsername(){
+    var request = new XMLHttpRequest();
+    var data;
+    request.onload = function(){
+        alert(this.responseText); //this.responseText in built in AJAX.
+        data = JSON.parse(this.responseText);
+    }
+    request.open("get", "getusername.php", false);
+    request.send();
+
+    if(request.readyState == 4 && request.status == 200){
+        return data;
+    }
+}
+
+function encryptMsg(){
+    
+}
+
+
 
