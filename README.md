@@ -6,11 +6,15 @@ Project uses:
 - XAMPP VER 3.2.2
 - XAMPP installer = xampp-win32-5.6.38-0-VC11-installer
 
-User-made library name: Defuse
-
+User-made libraries: 
+- Defuse
+- phpseclib (VER 1.0.18)
 Credits: 
-- Source: https://github.com/defuse/php-encryption 
-- Authors: Created by Taylor Hornby and Scott Arciszewski.
+- Defuse
+    - Source: https://github.com/defuse/php-encryption 
+    - Authors: Created by Taylor Hornby and Scott Arciszewski.
+- phpseclib (VER 1.0.18)
+    - Source: https://github.com/phpseclib/phpseclib
 
 The folder, "database_source" is to give you an example of what the database looks like.
 - No data of actual users will be present in this folder. Data that is present are used as dummy variables to give you an example of what the overall database structure looks like.
