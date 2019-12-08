@@ -79,11 +79,12 @@
 
                         <input type = "submit" class="btn btn-outline-dark" id = "submitButton" value = "Login" />
             
-                        <a href = "http://localhost/register/registration.php"><input type = "submit" class="btn btn-outline-dark" id = "registerButton" value = "Register"  /></a>
+                        
                     </div>
                 </div>
             </div>
         </form>
+        <a href = "http://localhost/register/registration.php"><input type = "submit" class="btn btn-outline-dark" id = "registerButton" value = "Register"  /></a>
     </div>    
 </body>
 </html>
