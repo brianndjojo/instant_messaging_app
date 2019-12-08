@@ -2,6 +2,12 @@
     define('ROOT', 'C:\Xampp3\htdocs');
     //for encryption.
     require_once(ROOT . '\encryption\defuse-crypto-php5.phar');
+	use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+	
+    require(ROOT . '/PHPMailer/src/Exception.php');
+    require(ROOT . '/PHPMailer/src/PHPMailer.php');
+    require(ROOT . '/PHPMailer/src/SMTP.php');
     
     use Defuse\Crypto\Crypto;
     use Defuse\Crypto\Key;
@@ -88,6 +94,37 @@
         
         $key_result = mysql_query(" INSERT INTO comp3334_userkeys.userkeys (username, userKey) VALUES ('$reg_username', '$encodedKey') ")
             or die("Failed to query the database. ".mysql_error());
+		
+		$mail = new PHPMailer(true);
+        //Server settings
+		$mail->SMTPDebug = 2;  
+        $mail->IsSMTP();
+		$mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = "ssl";
+        $mail->Username = "testingcomp3334";
+        $mail->Password = "comp3334testing";
+        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 465;
+                                
+        $mail->From = "comp3334testing@gmail.com";
+        $mail->FromName = "Mailer";
+        $mail->AddAddress($reg_email, "Name");                 
+
+        $mail->isHTML(true);
+
+        $mail->Subject = "[App] Confirm your email address";
+        $mail->Body    = "Welcome! You have registered successfully!";
+        $mail->AltBody = "Welcome! You have registered successfully!";
+
+        if(!$mail->Send())
+        {
+           echo "Message could not be sent. <p>";
+           echo "Mailer Error: " . $mail->ErrorInfo;
+          exit;
+        }
+
+        echo "Message has been sent";
        
         header("location: http://localhost/login/login.php");
     }
