@@ -1,14 +1,20 @@
 const socket = io('http://localhost:3000');
+
+/*socket.on("connect", function(){
+    const sessionID = socket.socket.sessionid;
+    $.post('getusername.php', {id: sessionID});
+});*/
+
 const messageContainer = document.getElementById('sender');
 const messageText = document.getElementById('msgInput');
 const sentMessages = document.getElementById('messages');
 
-const userData = getUsername();
+const name = getUsername();
 //Gets your username from your login session.
-const name = userData.username;
-const keyPair = userData.key;
+//const name = userData.username;
+//const keyPair = userData.key;
 console.log(name);
-console.log(keyPair);
+//console.log(keyPair);
 
 //Upon connection, you tell teh server that you connected.
 appendConnMsg('You connected.');
@@ -22,6 +28,7 @@ socket.on('userConnected', name =>{
 //for recieving message.
 socket.on('chatMsg', data => {
     /*Decrypt message here.*/
+    //var decryptedData = getdecryptMsg();
     console.log(data);
     appendMsg(`${data.name}:    ${data.message}`);
 });
@@ -36,14 +43,19 @@ messageContainer.addEventListener('submit', e => {
     e.preventDefault() //stop our page from refreshing when clicking send.
     const message = messageText.value;
 
-   
-    socket.emit('sendchatMsg', message); //sends message from client to server.
-    
-    appendMsg(`You: ${message}`); //appends message to chat sent by you!
     /*Encrypt message here.*/
-    //getencryptMsg();
+    /*
+    var encryptData = getencryptMsg();
+    var encryptedMsg = encryptData.encrypMsg;
     
-    messageText.value = ''; //clears messageText for new messages.
+    console.log(encryptedMsg);
+    socket.emit('sendchatMsg', encryptedMsg); //sends message from client to server.
+    */
+    socket.emit('sendchatMsg', message);
+    appendMsg(`You: ${message}`); //appends message to chat sent by you!
+
+    
+    //messageText.value = ''; //clears messageText for new messages.
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +92,7 @@ function getUsername(){
         alert(this.responseText); //this.responseText in built in AJAX.
         data = JSON.parse(this.responseText);
     }
-    request.open("get", "getusername.php", false);
+    request.open("get", "getusername.php",false);
     request.send();
 
     if(request.readyState == 4 && request.status == 200){
@@ -96,12 +108,16 @@ function getUsername(){
         data = JSON.parse(this.responseText);
     }
     request2.open("get", "encrypt.php", false);
+
     request2.send();
 
     if(request2.readyState == 4 && request2.status == 200){
         return data;
     }
 }*/
+
+
+
 
 
 
