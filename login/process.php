@@ -2,7 +2,7 @@
     session_start();
     define('ROOT', 'C:\Xampp3\htdocs');
     //for encryption.
-    require_once(ROOT . '\encryption\defuse-crypto-php5.phar');
+    require_once(ROOT . '/encryption/defuse-crypto-php5.phar');
     use Defuse\Crypto\Crypto;
     use Defuse\Crypto\Key;
 
@@ -33,7 +33,7 @@
         $fetchedKey = Key::loadFromAsciiSafeString($row['userkey']);
         $storedPass = Crypto::decrypt($row['password'], $fetchedKey, $raw_binary = false);
         
-        if($passWord == $storedPass && $row['username'] != "" && $row['password'] != "")
+        if($passWord == $storedPass && $row['username'] != "" && $row['password'] != "" && $row['activate'] == '1')
         {
             $_SESSION["name"] = $row['username'];
             header('location: http://localhost/chat');
@@ -79,11 +79,12 @@
 
                         <input type = "submit" class="btn btn-outline-dark" id = "submitButton" value = "Login" />
             
-                        <a href = "http://localhost/register/registration.php"><input type = "submit" class="btn btn-outline-dark" id = "registerButton" value = "Register"  /></a>
+                        
                     </div>
                 </div>
             </div>
         </form>
+        <a href = "http://localhost/register/registration.php"><input type = "submit" class="btn btn-outline-dark" id = "registerButton" value = "Register"  /></a>
     </div>    
 </body>
 </html>
