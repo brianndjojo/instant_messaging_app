@@ -92,6 +92,9 @@
         $info_result = mysql_query(" INSERT INTO comp3334.users (username, password, email) VALUES ('$reg_username', '$encodedPassword', '$reg_email') " )
             or die("Failed to query the database. ".mysql_error());
         
+        $key_result = mysql_query(" INSERT INTO comp3334_userkeys.userkeys (username, userKey) VALUES ('$reg_username', '$encodedKey') ")
+            or die("Failed to query the database. ".mysql_error());
+        
 		
 		$mail = new PHPMailer(true);
         //Server settings
