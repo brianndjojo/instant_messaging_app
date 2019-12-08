@@ -26,7 +26,8 @@
     $reg_password = $_POST['password'];
     $reg_confirmpass = $_POST['confirmPassword'];
     $reg_email = $_POST['email'];
-
+	$activate = md5(rand(1000,5000));
+	
     //test result of email format
     $emailValid = test_input($reg_email);
 
@@ -89,11 +90,12 @@
         $encodedKey = $newKey -> saveToAsciiSafeString();
 
         //Query the information from the database for the user.
-        $info_result = mysql_query(" INSERT INTO comp3334.users (username, password, email) VALUES ('$reg_username', '$encodedPassword', '$reg_email') " )
+        $info_result = mysql_query(" INSERT INTO comp3334.users (username, password, email, activate) VALUES ('$reg_username', '$encodedPassword', '$reg_email', '$activate') " )
             or die("Failed to query the database. ".mysql_error());
         
         $key_result = mysql_query(" INSERT INTO comp3334_userkeys.userkeys (username, userKey) VALUES ('$reg_username', '$encodedKey') ")
             or die("Failed to query the database. ".mysql_error());
+        
 		
 		$mail = new PHPMailer(true);
         //Server settings
@@ -114,7 +116,7 @@
         $mail->isHTML(true);
 
         $mail->Subject = "[App] Confirm your email address";
-        $mail->Body    = "Welcome! You have registered successfully!";
+        $mail->Body    = 'localhost/verify/verify.php?email='.$reg_email.'&activate='.$activate.'';
         $mail->AltBody = "Welcome! You have registered successfully!";
 
         if(!$mail->Send())
