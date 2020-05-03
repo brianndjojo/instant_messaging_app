@@ -2,6 +2,7 @@
 Encryption folder is a user-made library used for AES encryption.
 
 Reperesentation of how chat should look like: https://www.youtube.com/watch?v=YfW5oMQsQsk
+
 Representation of how to register an account: https://www.youtube.com/watch?v=YQ0aoHXGyDs
 
 Project uses:
